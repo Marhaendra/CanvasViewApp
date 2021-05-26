@@ -25,6 +25,18 @@
             android:layout_height="fill_parent"
             android:contentDescription="@string/brush"
             android:src="@drawable/brush" />
+        <Button
+            android:id="@+id/draw_20"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:textSize="8sp"
+            android:text="8px"/>
+        <Button
+            android:id="@+id/draw_50"
+            android:layout_width="55dp"
+            android:layout_height="40dp"
+            android:textSize="8sp"
+            android:text="10px"/>
         <ImageButton
             android:id="@+id/erase_btn"
             android:layout_width="wrap_content"
@@ -39,12 +51,13 @@
             android:src="@drawable/save" />
 
     </LinearLayout>
-    <
+    <com.papb.canvasviewapp.MyCanvasView
         android:id="@+id/drawing"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#FFFFFFFF" />
+
     <!-- Top Row -->
     <LinearLayout
         android:id="@+id/paint_colors"
@@ -57,7 +70,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FF660000"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FF660000" />
@@ -67,7 +80,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FFFF0000"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FFFF0000" />
@@ -77,7 +90,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FFFF6600"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FFFF6600" />
@@ -87,7 +100,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FFFFCC00"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FFFFCC00" />
@@ -97,7 +110,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FF009900"
-            android:contentDescription="@Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FF009900" />
@@ -107,7 +120,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FF009999"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FF009999" />
@@ -116,7 +129,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FF0000FF"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FF0000FF" />
@@ -126,7 +139,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FF990099"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FF990099" />
@@ -136,7 +149,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FFFF6666"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FFFF6666" />
@@ -146,7 +159,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FFFFFFFF"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FFFFFFFF" />
@@ -156,7 +169,7 @@
             android:layout_height="@dimen/large_brush"
             android:layout_margin="2dp"
             android:background="#FF787878"
-            android:contentDescription="Paint"
+            android:contentDescription="@string/paint"
             android:onClick="paintClicked"
             android:src="@drawable/paint"
             android:tag="#FF787878" />

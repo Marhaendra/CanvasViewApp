@@ -1,50 +1,54 @@
 package com.papb.canvasviewapp;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Rect;
-import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Color;
-
-import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
-
+import android.util.TypedValue;
+/**
+ * Created by PROGRAMMER on 10/5/2016.
+ */
+import android.content.Context;
+import android.util.AttributeSet;
 public class MyCanvasView extends View {
-    private Paint mPaint;
-    private Path mPath;
-    private int mDrawColor;
-    private int mBackgroundColor;
-    private Canvas mCanvas;
-    private Bitmap mBitmap;
-    private Rect mFrame;
-
-    private float brushSize, lastBrushSize;
+    //drawing path
+    private Path drawPath;
+    private boolean erase=false;
+    //drawing and canvas paint
+    private Paint drawPaint, canvasPaint;
+    //initial color
     private int paintColor = 0xFF660000;
-
-
+    //canvas
+    private Canvas drawCanvas;
+    //canvas bitmap
+    private Bitmap canvasBitmap;
+    private float brushSize, lastBrushSize;
     public MyCanvasView(Context context, AttributeSet attrs){
         super(context, attrs);
 
         setupDrawing();
+        setupDrawing20();
+        setupDrawing50();
     }
     public void startNew(){
-        mCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+        drawCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
         invalidate();
     }
-
+    public void setErase(boolean isErase){
+        erase=isErase;
+        if(erase) drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+        else drawPaint.setXfermode(null);
+    }
     public void setBrushSize(float newSize){
         float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 newSize, getResources().getDisplayMetrics());
         brushSize=pixelAmount;
-        mPaint.setStrokeWidth(brushSize);
+        drawPaint.setStrokeWidth(brushSize);
     }
     public void setLastBrushSize(float lastSize){
         lastBrushSize=lastSize;
@@ -55,13 +59,13 @@ public class MyCanvasView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
+        canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        drawCanvas = new Canvas(canvasBitmap);
     }
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawBitmap(mBitmap, 0, 0, mPaint);
-        canvas.drawPath(mPath, mPaint);
+        canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
+        canvas.drawPath(drawPath, drawPaint);
     }
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -69,14 +73,14 @@ public class MyCanvasView extends View {
         float touchY = event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mPath.moveTo(touchX, touchY);
+                drawPath.moveTo(touchX, touchY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                mPath.lineTo(touchX, touchY);
+                drawPath.lineTo(touchX, touchY);
                 break;
             case MotionEvent.ACTION_UP:
-                mCanvas.drawPath(mPath, mPaint);
-                mPath.reset();
+                drawCanvas.drawPath(drawPath, drawPaint);
+                drawPath.reset();
                 break;
             default:
                 return false;
@@ -87,20 +91,44 @@ public class MyCanvasView extends View {
     public void setColor(String newColor){
         invalidate();
         paintColor = Color.parseColor(newColor);
-        mPaint.setColor(paintColor);
+        drawPaint.setColor(paintColor);
     }
     public void setupDrawing(){
-        mPath = new Path();
-        mPaint = new Paint();
-        mPaint.setColor(paintColor);
-        mPaint.setAntiAlias(true);
-        mPaint.setStrokeWidth(5);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint = new Paint(Paint.DITHER_FLAG);
+        drawPath = new Path();
+        drawPaint = new Paint();
+        drawPaint.setColor(paintColor);
+        drawPaint.setAntiAlias(true);
+        drawPaint.setStrokeWidth(5);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        canvasPaint = new Paint(Paint.DITHER_FLAG);
         brushSize = getResources().getInteger(R.integer.small_size);
         lastBrushSize = brushSize;
-        mPaint.setStrokeWidth(brushSize);
+        drawPaint.setStrokeWidth(brushSize);
+    }
+    public void setupDrawing20(){
+        drawPath = new Path();
+        drawPaint = new Paint();
+        drawPaint.setColor(paintColor);
+        drawPaint.setAntiAlias(true);
+        drawPaint.setStrokeWidth(20);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        canvasPaint = new Paint(Paint.DITHER_FLAG);
+        brushSize = getResources().getInteger(R.integer.small_size);
+    }
+    public void setupDrawing50(){
+        drawPath = new Path();
+        drawPaint = new Paint();
+        drawPaint.setColor(paintColor);
+        drawPaint.setAntiAlias(true);
+        drawPaint.setStrokeWidth(50);
+        drawPaint.setStyle(Paint.Style.STROKE);
+        drawPaint.setStrokeJoin(Paint.Join.ROUND);
+        drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        canvasPaint = new Paint(Paint.DITHER_FLAG);
+        brushSize = getResources().getInteger(R.integer.small_size);
     }
 }
